@@ -7,6 +7,20 @@
         box-sizing: border-box;
       }
 
+      .uk-link, a {
+        color: white !important;
+      }
+
+      .uk-subnav-pill >.uk-active > a {
+        background-color: crimson !important;
+        color: white !important;
+      }
+
+      .uk-subnav-pill > * > :first-child {
+        background-color: transparent !important;
+        color: black !important;
+      }
+
       body {
         font-family: sans-serif;
         margin-left: 30px;
@@ -57,13 +71,43 @@
   <body>
     <h1 id="header">Basics! 🚀</h1>
     <div id="container">
-      <p>Input:</p>
-      <input id="input-field" />
-      <br />
-      <button id="submit-button">Submit</button>
-      <p>Output:</p>
-      <div id="output-div"></div>
+    <ul class="uk-subnav uk-subnav-pill" uk-switcher="animation: uk-animation-fade">
+      <li><a href="#">Weeks in Minutes</a></li>
+      <li><a href="#">Fahrenheight to Celcius</a></li>
+      <li><a href="#">Road Trip Cost</a></li>
+      <li><a href="#">Ice Cream Buffet</a></li>
+      <li><a href="#">Time to Type Sonnets</a></li>
+    </ul>
+    <ul class="uk-switcher uk-margin">
+        <li>
+          <p>Enter number of weeks:</p>
+          <input id="input-weeks" />
+        </li>
+        <li>
+          <p>Enter temperature in Fahrenheight:</p>
+          <input id="input-temperature" />
+        </li>
+        <li>
+          <p>Enter distance travelled:</p>
+          <input id="input-road-trip" />
+        </li>
+        <li>
+          <p>Enter number of trips:</p>
+          <input id="input-ice-cream" />
+        </li>
+        <li>
+          <p>Enter your words per minute:</p>
+          <input id="input-ice-cream" />
+        </li>
+    </ul>
+    <br />
+    <div class="uk-flex uk-flex-center">
+      <button class="uk-width-small" id="submit">Submit</button>
     </div>
+    <p>Output:</p>
+    <div id="output-div"></div>
+  </div>
+    
     <!-- Import program logic -->
     <script src="script.js"></script>
     <!-- Define button click functionality -->
