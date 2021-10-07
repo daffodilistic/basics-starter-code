@@ -65,6 +65,12 @@ const EXERCISES = Object.freeze(
       instruction: "Enter excess 20-cent coins that Ivan has:",
       inputId: "input-extra-coins",
       functionCall: getRichPerson
+    },
+    {
+      title: "Mortgage Calculator",
+      instruction: "How much do you wish to borrow:",
+      inputId: "input-mortgage-principal",
+      functionCall: getMortgagePayment
     }
   ]
 );
@@ -233,6 +239,28 @@ function getRichPerson() {
   const shortfall = extra20CentCoins * 0.20;
   
   displayResults(`Ivan will always be poorer than Helen by $${shortfall.toFixed(2)} because they have the same number of coins in total.`);
+}
+
+function getDataPlanCost() {
+  const dataPlanCostPerMonth = 19.99;
+  const dataPlanGBQuotaPerMonth = 50;
+
+  const gbPerMonth = parseFloat(document.querySelector("#input-data-per-month").value);
+  const dataPlanCost = (Math.ceil(gbPerMonth / dataPlanGBQuotaPerMonth) * dataPlanCostPerMonth) / gbPerMonth;
+
+  displayResults(`Your data plan costs $${dataPlanCost.toFixed(2)} per GB.`);
+}
+
+function getMortgagePayment() {
+  const interestRate = 0.03;
+  const mortgageYears = 10;
+  const mortgagePrincipal = parseFloat(document.querySelector("#input-mortgage-principal").value);
+
+  const totalInterest = mortgagePrincipal * interestRate * mortgageYears;
+  const totalPayment = mortgagePrincipal + totalInterest;
+  const monthlyPayment = totalPayment / mortgageYears / 12;
+  
+  displayResults(`You will pay $${monthlyPayment.toFixed(2)} per month (total of $${totalPayment.toFixed(2)}), of which $${totalInterest.toFixed(2)} is the interest.`);
 }
 
 function displayResults(result, inputId) {
