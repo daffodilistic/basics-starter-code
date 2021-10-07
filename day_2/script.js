@@ -236,7 +236,7 @@ function getRichPerson() {
   const extra20CentCoins = parseInt(document.querySelector("#input-extra-coins").value);
   // NOTE: Because number of coins is fixed, any additional 20 cent coins that
   // Ivan has will always make him poorer than Helen.
-  const shortfall = extra20CentCoins * 0.20;
+  const shortfall = extra20CentCoins * 0.30;
   
   displayResults(`Ivan will always be poorer than Helen by $${shortfall.toFixed(2)} because they have the same number of coins in total.`);
 }
