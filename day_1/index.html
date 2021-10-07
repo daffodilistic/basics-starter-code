@@ -1,113 +1,83 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Basics</title>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
 
-      .uk-link, a {
-        color: white !important;
-      }
+<head>
+  <title>Basics</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/css/uikit.min.css" />
 
-      .uk-subnav-pill >.uk-active > a {
-        background-color: crimson !important;
-        color: white !important;
-      }
+  <!-- UIkit JS -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/js/uikit-icons.min.js"></script>
 
-      .uk-subnav-pill > * > :first-child {
-        background-color: transparent !important;
-        color: black !important;
-      }
+  <style>
+    .uk-background-rocketacademy {
+      background-color: pink;
+    }
 
-      body {
-        font-family: sans-serif;
-        margin-left: 30px;
-        margin-right: 30px;
-      }
+    .uk-link,
+    a {
+      color: white !important;
+    }
 
-      #header {
-        text-align: center;
-      }
+    .uk-subnav-pill>.uk-active>a {
+      background-color: crimson !important;
+      color: white !important;
+    }
 
-      #container {
-        background-color: pink;
-        margin: 40px auto;
-        max-width: 800px;
-        padding: 38px 31px;
-      }
+    .uk-subnav-pill>*> :first-child {
+      background-color: transparent !important;
+      color: black !important;
+    }
+  </style>
+</head>
 
-      input {
-        font-size: 21px;
-        line-height: 33px;
-        margin: 0 0 23px 0;
-        padding: 0 9px;
-        width: 100%;
-      }
-
-      button {
-        font-size: 21px;
-        line-height: 33px;
-        margin: 0 0 23px 0;
-        padding: 0 6px;
-      }
-
-      #output-div {
-        background-color: lightgrey;
-        margin: 20px auto;
-        padding: 20px;
-        width: 100%;
-      }
-    </style>
-    <!-- UIkit CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/css/uikit.min.css" />
-
-    <!-- UIkit JS -->
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/js/uikit.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/js/uikit-icons.min.js"></script>
-  </head>
-
-  <body>
-    <h1 id="header">Basics! 🚀</h1>
-    <div id="container">
-    <ul id="switcher" class="uk-subnav uk-subnav-pill" uk-switcher="animation: uk-animation-fade">
-      <li><a href="#">Weeks in Minutes</a></li>
-      <li><a href="#">Fahrenheight to Celcius</a></li>
-      <li><a href="#">Road Trip Cost</a></li>
-      <li><a href="#">Ice Cream Buffet</a></li>
-      <li><a href="#">Time to Type Sonnets</a></li>
-    </ul>
-    <ul class="uk-switcher uk-margin">
+<body>
+  <h1 class="uk-text-center uk-margin-top uk-margin-bottom">Basics! 🚀</h1>
+  <div class="uk-section uk-margin-left uk-margin-right">
+    <div class="uk-container uk-background-rocketacademy">
+      <ul id="switcher" class="uk-subnav uk-subnav-pill" uk-switcher="animation: uk-animation-fade">
+        <li><a href="#">Weeks in Minutes</a></li>
+        <li><a href="#">Fahrenheight to Celcius</a></li>
+        <li><a href="#">Road Trip Cost</a></li>
+        <li><a href="#">Ice Cream Buffet</a></li>
+        <li><a href="#">Time to Type Sonnets</a></li>
+      </ul>
+      <ul class="uk-switcher uk-margin">
         <li>
-          <p>Enter number of weeks:</p>
-          <input id="input-weeks" />
+          <h4>Enter number of weeks:</h4>
+          <input id="input-weeks" class="uk-form-small uk-input" />
         </li>
         <li>
-          <p>Enter temperature in Fahrenheight:</p>
-          <input id="input-temperature" />
+          <h4>Enter temperature in Fahrenheight:</h4>
+          <input id="input-temperature" class="uk-form-small uk-input" />
         </li>
         <li>
-          <p>Enter distance travelled:</p>
-          <input id="input-road-trip" />
+          <h4>Enter distance travelled:</h4>
+          <input id="input-road-trip" class="uk-form-small uk-input" />
         </li>
         <li>
-          <p>Enter number of trips to the ice-cream station:</p>
-          <input id="input-trips-to-ice-cream-station" />
+          <h4>Enter number of trips to the ice-cream station:</h4>
+          <input id="input-trips-to-ice-cream-station" class="uk-form-small uk-input" />
         </li>
         <li>
-          <p>Enter your words per minute:</p>
-          <input id="input-wpm" />
+          <h4>Enter your words per minute:</h4>
+          <input id="input-wpm" class="uk-form-small uk-input" />
         </li>
-    </ul>
-    <br />
-    <div class="uk-flex uk-flex-center">
-      <button class="uk-width-small" id="submit-button">Submit</button>
+      </ul>
+      <div class="uk-flex uk-flex-center">
+        <button class="uk-button uk-width-small" id="submit-button">Submit</button>
+      </div>
+      <h4 class="uk-margin-top uk-margin-bottom">Output:</h4>
+      <h5 class="uk-margin-top uk-margin-bottom">
+        <div id="output-div" class="uk-padding-small uk-background-muted">&nbsp;</div>
+      </h5>
     </div>
-    <p>Output:</p>
-    <div id="output-div"></div>
   </div>
-    <!-- Import program logic -->
-    <script src="script.js"></script>
-  </body>
+  <!-- Import program logic -->
+  <script src="script.js"></script>
+</body>
+
 </html>
