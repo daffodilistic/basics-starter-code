@@ -238,7 +238,7 @@ function getRichPerson() {
   // Ivan has will always make him poorer than Helen.
   const shortfall = extra20CentCoins * 0.30;
   
-  displayResults(`Ivan will always be poorer than Helen by $${shortfall.toFixed(2)} because they have the same number of coins in total.`);
+  displayResults(`Ivan will always be poorer than Helen by $${shortfall.toFixed(2)} because they have the same number of coins in total, and they only have 50 and 20 cent coins.`);
 }
 
 function getDataPlanCost() {
