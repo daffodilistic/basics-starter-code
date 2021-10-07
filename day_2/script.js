@@ -30,6 +30,42 @@ const EXERCISES = Object.freeze(
       inputId: "input-minutes-past-1",
       functionCall: getAngleOfClock
     },
+    {
+      title: "Cost of Aircon",
+      instruction: "Enter hours of aircon use:",
+      inputId: "input-aircon-hours",
+      functionCall: getCostOfAircon
+    },
+    {
+      title: "Screen Time",
+      instruction: "Enter number of hours spent on your favourite app per day:",
+      inputId: "input-screen-time",
+      functionCall: getScreenTime
+    },
+    {
+      title: "Papayas Budget",
+      instruction: "Enter price of papaya per kilo:",
+      inputId: "input-papaya-budget",
+      functionCall: getPapayaBudget
+    },
+    {
+      title: "Ice Machine",
+      instruction: "Enter number of guests:",
+      inputId: "input-ice-machine-guests",
+      functionCall: getIceMachineRuntime
+    },
+    {
+      title: "Beer Order",
+      instruction: "Enter average number of customers per day:",
+      inputId: "input-beer-drinkers",
+      functionCall: getHalfBeerKegCount
+    },
+    {
+      title: "Helen & Ivan's Coins",
+      instruction: "Enter excess 20-cent coins that Ivan has:",
+      inputId: "input-extra-coins",
+      functionCall: getRichPerson
+    }
   ]
 );
 
@@ -127,10 +163,84 @@ function getAngleOfClock() {
   displayResults(`Clockwise angle between hour and minute hands: ${angle}&#176;`, "#input-minutes-past-1");
 }
 
+function getCostOfAircon() {
+  const kwCostPerHour = 0.20;
+  const kwAirconUse = 2;
+
+  const numOfHours = parseInt(document.querySelector("#input-aircon-hours").value);
+  const costOfAircon = kwAirconUse * kwCostPerHour * numOfHours;
+
+  displayResults(`${numOfHours} hour(s) of aircon use will cost you $${costOfAircon.toFixed(2)}`);
+}
+
+function getScreenTime() {
+  const lifeExpectancyYears = 82;
+  const downTimeHours = 9;
+
+  const screenTimeHoursPerDay = parseInt(document.querySelector("#input-screen-time").value);
+
+  if (screenTimeHoursPerDay > 24) {
+    displayResults(`Invalid value!`);
+  } else {
+    const totalScreenTimeHoursInLife = screenTimeHoursPerDay * 365 * lifeExpectancyYears;
+    const daysInLife = totalScreenTimeHoursInLife / (24 - downTimeHours);
+
+    displayResults(`In your lifespan, you would spend ${daysInLife.toFixed(2)} days on your favourite app, excluding eating and sleeping time.`);
+  }
+}
+
+function getPapayaBudget() {
+  const kgPapayaConsumedPerMonth = 2;
+  
+  const papayaCostPerKg = parseFloat(document.querySelector("#input-papaya-budget").value);
+  const papayaBudget = papayaCostPerKg * kgPapayaConsumedPerMonth;
+
+  displayResults(`You would need to budget $${papayaBudget.toFixed(2)} this month for papayas.`);
+}
+
+function getIceMachineRuntime() {
+  const drinksPerGuest = 2;
+  const iceCubesPerDrink = 4;
+  const gramsPerIceCube = 1.5;
+  const gramsPerPound = 454;
+  const iceMachinePoundsPerHour = 5;
+
+  const numOfGuests = parseInt(document.querySelector("#input-ice-machine-guests").value);
+  const totalPounds = numOfGuests * drinksPerGuest * iceCubesPerDrink * gramsPerIceCube / gramsPerPound;
+  const runtimeHours = totalPounds / iceMachinePoundsPerHour;
+
+  displayResults(`The ice machine requires ${runtimeHours.toFixed(2)} hours to create enough ice.`);
+}
+
+function getHalfBeerKegCount() {
+  const pintsInHalfKeg = 124;
+  const averagePintsPerGuestPerDay = 2;
+  const daysPerQuarter = 91;
+
+  const numOfGuests = parseInt(document.querySelector("#input-beer-drinkers").value);
+  const totalPintsPerQuarter = numOfGuests * averagePintsPerGuestPerDay * daysPerQuarter;
+  const numHalfKegs = totalPintsPerQuarter / pintsInHalfKeg;
+
+  displayResults(`You would need ${numHalfKegs.toFixed(2)} half-kegs of beer per quarter`);
+}
+
+function getRichPerson() {
+  const helen20CentCoins = 64;
+
+  const extra20CentCoins = parseInt(document.querySelector("#input-extra-coins").value);
+  // NOTE: Because number of coins is fixed, any additional 20 cent coins that
+  // Ivan has will always make him poorer than Helen.
+  const shortfall = extra20CentCoins * 0.20;
+  
+  displayResults(`Ivan will always be poorer than Helen by $${shortfall.toFixed(2)} because they have the same number of coins in total.`);
+}
+
 function displayResults(result, inputId) {
   let outputElement = document.querySelector("#output-div");
   outputElement.innerHTML = result;
 
   // Reset input value
-  document.querySelector(inputId).value = "";
+  if (inputId) {
+    document.querySelector(inputId).value = "";
+  }
 }
