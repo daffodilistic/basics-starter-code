@@ -35,7 +35,7 @@
       // const promisedPaths = [];
       for (let i = 1; i <= DAYS; i++) {
         const path = `day_${i}`;
-        const response = await fetch(`/basics-starter-code/${path}/index.html`, {
+        const response = await fetch(`${path}/index.html`, {
           method: 'HEAD'
         });
         if (response.ok) {
