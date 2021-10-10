@@ -176,7 +176,7 @@ function getCostOfAircon() {
   const numOfHours = parseInt(document.querySelector("#input-aircon-hours").value);
   const costOfAircon = kwAirconUse * kwCostPerHour * numOfHours;
 
-  displayResults(`${numOfHours} hour(s) of aircon use will cost you $${costOfAircon.toFixed(2)}`);
+  displayResults(`${numOfHours} hour(s) of aircon use will cost you $${costOfAircon.toFixed(2)}`, "#input-aircon-hours");
 }
 
 function getScreenTime() {
@@ -191,17 +191,17 @@ function getScreenTime() {
     const totalScreenTimeHoursInLife = screenTimeHoursPerDay * 365 * lifeExpectancyYears;
     const daysInLife = totalScreenTimeHoursInLife / (24 - downTimeHours);
 
-    displayResults(`In your lifespan, you would spend ${daysInLife.toFixed(2)} days on your favourite app, excluding eating and sleeping time.`);
+    displayResults(`In your lifespan, you would spend ${daysInLife.toFixed(2)} days on your favourite app, excluding eating and sleeping time.`, "#input-screen-time");
   }
 }
 
 function getPapayaBudget() {
   const kgPapayaConsumedPerMonth = 2;
-  
+
   const papayaCostPerKg = parseFloat(document.querySelector("#input-papaya-budget").value);
   const papayaBudget = papayaCostPerKg * kgPapayaConsumedPerMonth;
 
-  displayResults(`You would need to budget $${papayaBudget.toFixed(2)} this month for papayas.`);
+  displayResults(`You would need to budget $${papayaBudget.toFixed(2)} this month for papayas.`, "#input-papaya-budget");
 }
 
 function getIceMachineRuntime() {
@@ -215,7 +215,7 @@ function getIceMachineRuntime() {
   const totalPounds = numOfGuests * drinksPerGuest * iceCubesPerDrink * gramsPerIceCube / gramsPerPound;
   const runtimeHours = totalPounds / iceMachinePoundsPerHour;
 
-  displayResults(`The ice machine requires ${runtimeHours.toFixed(2)} hours to create enough ice.`);
+  displayResults(`The ice machine requires ${runtimeHours.toFixed(2)} hours to create enough ice.`, "#input-ice-machine-guests");
 }
 
 function getHalfBeerKegCount() {
@@ -227,7 +227,7 @@ function getHalfBeerKegCount() {
   const totalPintsPerQuarter = numOfGuests * averagePintsPerGuestPerDay * daysPerQuarter;
   const numHalfKegs = totalPintsPerQuarter / pintsInHalfKeg;
 
-  displayResults(`You would need ${numHalfKegs.toFixed(2)} half-kegs of beer per quarter`);
+  displayResults(`You would need ${numHalfKegs.toFixed(2)} half-kegs of beer per quarter`, "#input-beer-drinkers");
 }
 
 function getRichPerson() {
@@ -237,8 +237,8 @@ function getRichPerson() {
   // NOTE: Because number of coins is fixed, any additional 20 cent coins that
   // Ivan has will always make him poorer than Helen.
   const shortfall = extra20CentCoins * 0.30;
-  
-  displayResults(`Ivan will always be poorer than Helen by $${shortfall.toFixed(2)} because they have the same number of coins in total, and they only have 50 and 20 cent coins.`);
+
+  displayResults(`Ivan will always be poorer than Helen by $${shortfall.toFixed(2)} because they have the same number of coins in total, and they only have 50 and 20 cent coins.`,"#input-extra-coins");
 }
 
 function getDataPlanCost() {
@@ -248,7 +248,7 @@ function getDataPlanCost() {
   const gbPerMonth = parseFloat(document.querySelector("#input-data-per-month").value);
   const dataPlanCost = (Math.ceil(gbPerMonth / dataPlanGBQuotaPerMonth) * dataPlanCostPerMonth) / gbPerMonth;
 
-  displayResults(`Your data plan costs $${dataPlanCost.toFixed(2)} per GB.`);
+  displayResults(`Your data plan costs $${dataPlanCost.toFixed(2)} per GB.`,"#input-data-per-month");
 }
 
 function getMortgagePayment() {
@@ -259,8 +259,8 @@ function getMortgagePayment() {
   const totalInterest = mortgagePrincipal * interestRate * mortgageYears;
   const totalPayment = mortgagePrincipal + totalInterest;
   const monthlyPayment = totalPayment / mortgageYears / 12;
-  
-  displayResults(`You will pay $${monthlyPayment.toFixed(2)} per month (total of $${totalPayment.toFixed(2)}), of which $${totalInterest.toFixed(2)} is the interest.`);
+
+  displayResults(`You will pay $${monthlyPayment.toFixed(2)} per month (total of $${totalPayment.toFixed(2)}), of which $${totalInterest.toFixed(2)} is the interest.`, "#input-mortgage-principal");
 }
 
 function displayResults(result, inputId) {
