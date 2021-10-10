@@ -53,6 +53,42 @@ const EXERCISES = Object.freeze(
       instruction: "Enter your guess:",
       inputId: "input-new-winning-conditions",
       functionCall: getNewWinningConditions
+    },
+    {
+      title: "Lucky 11",
+      instruction: "Enter your guess:",
+      inputId: "input-lucky-11",
+      functionCall: getLucky11
+    },
+    {
+      title: "Hawker Food Categorisation",
+      instruction: "Enter a hawker dish:",
+      inputId: "input-hawker-food-categorisation",
+      functionCall: getHawkerDishCategory
+    },
+    {
+      title: "4D Single Digit Guess",
+      instruction: "Enter your guess:",
+      inputId: "input-4d-single-digit-guess",
+      functionCall: get4dSingleDigitGuess
+    },
+    {
+      title: "Hawker Food Randomness",
+      instruction: "Enter your guess:",
+      inputId: "input-hawker-food-randomness",
+      functionCall: getHawkerDish
+    },
+    {
+      title: "4D Range Guess",
+      instruction: "Enter your guess:",
+      inputId: "input-4d-range-guess",
+      functionCall: get4dRangeGuess
+    },
+    {
+      title: "Hawker Food Omakase",
+      instruction: "Enter your desired food:",
+      inputId: "input-hawker-food-omakase",
+      functionCall: getHawkerOmakase
     }
   ]
 );
@@ -211,6 +247,162 @@ function getNewWinningConditions() {
     "#input-new-winning-conditions"
   );
 }
+
+function getLucky11() {
+  const diceGuess = parseInt(document.querySelector("#input-lucky-11").value);
+  const diceRolls = [rollDice(), rollDice()];
+
+  if ((diceRolls[0] + diceRolls[1] == 11) ||
+    diceRolls.includes(diceGuess)) {
+    displayResults(`You win! The dice rolled ${diceRolls[0]} and ${diceRolls[1]}`, "#input-lucky-11");
+  } else {
+    displayResults(`Sorry, no dice! The dice rolled ${diceRolls[0]} and ${diceRolls[1]}`, "#input-lucky-11");
+  }
+}
+
+function getHawkerDishCategory() {
+  const dishGuess = document.querySelector("#input-hawker-food-categorisation").value;
+  const dishList = [
+    "chicken rice",
+    "roti prata",
+    "nasi lemak",
+    "hokkien mee",
+    "bak kut teh",
+    "laksa"
+  ];
+
+  let foodType = "unknown";
+
+  if (dishGuess == dishList[0] || dishGuess == dishList[2]) {
+    foodType = "rice";
+  } else if (dishGuess == dishList[3] || dishGuess == dishList[5]) {
+    foodType = "noodle";
+  } else if (dishGuess == dishList[1] || dishGuess == dishList[4]) {
+    foodType = "other";
+  }
+
+  displayResults(`Your hawker food is a ${foodType} category.`, "#input-hawker-food-categorisation");
+}
+
+function get4dSingleDigitGuess() {
+  const guess = parseInt(document.querySelector("#input-4d-single-digit-guess").value);
+  const luckyNumber = [generateDigit(), generateDigit(), generateDigit(), generateDigit()];
+
+  if (luckyNumber.includes(guess)) {
+    displayResults(`You win! Your guess was ${guess} and the 4D number was ${luckyNumber.join("")}`, "#input-4d-single-digit-guess");
+  } else {
+    displayResults(`Sorry, you lost! Your guess was ${guess} and the 4D number was ${luckyNumber.join("")}`, "#input-4d-single-digit-guess");
+  }
+}
+
+function getHawkerDish() {
+  const dishGuess = document.querySelector("#input-hawker-food-randomness").value;
+  const diceRolls = rollDice() - 1;
+  const dishList = [
+    "chicken rice",
+    "roti prata",
+    "nasi lemak",
+    "hokkien mee",
+    "bak kut teh",
+    "laksa"
+  ];
+
+  if (dishList[diceRolls] == dishGuess) {
+    displayResults(`Congrats! You guessed correctly! Your ${dishList[diceRolls]} is free!`);
+  } else {
+    displayResults(`Sorry! You guessed wrong! Pay up!`);
+  }
+}
+
+function get4dRangeGuess() {
+  const guess = parseInt(document.querySelector("#input-4d-range-guess").value);
+  const luckyNumber = parseInt([generateDigit(), generateDigit(), generateDigit(), generateDigit()].join(""));
+
+  if ((guess > (luckyNumber - 1000)) && (guess < (luckyNumber + 1000))) {
+    displayResults(`You win! Your guess was ${guess} and the 4D number was ${luckyNumber}`, "#input-4d-range-guess");
+  } else {
+    displayResults(`You lost! Your guess was ${guess} and the 4D number was ${luckyNumber}`, "#input-4d-range-guess");
+  }
+}
+
+function getHawkerOmakase() {
+  const inputDish = document.querySelector("#input-hawker-food-omakase").value;
+  const riceDishes = [
+    {
+      name: "chicken rice",
+      hasSambal: false
+    },
+    {
+      name: "nasi lemak",
+      hasSambal: true
+    },
+    {
+      name: "bak kut teh",
+      hasSambal: false
+    }
+  ];
+  const noodleDishes = [
+    {
+      name: "hokkien mee",
+      hasSambal: false
+    },
+    {
+      name: "beef hor fan",
+      hasSambal: false
+    },
+    {
+      name: "laksa",
+      hasSambal: true
+    }
+  ];
+
+  let firstDish = {
+    name: "",
+    hasSambal: false
+  };
+  let secondDish = {
+    name: "",
+    hasSambal: false
+  };
+  let outputString = "-";
+
+  // Generate dishes
+  if (inputDish == "rice") {
+    // let i = Math.ceil(rollDice() / 2) - 1;
+    // console.log(Math.ceil(rollDice() / 2) - 1);
+    firstDish = riceDishes[Math.ceil(rollDice() / 2) - 1];
+    secondDish = riceDishes[Math.ceil(rollDice() / 2) - 1];
+  } else if (inputDish == "noodle") {
+    firstDish = noodleDishes[Math.ceil(rollDice() / 2) - 1];
+    secondDish = noodleDishes[Math.ceil(rollDice() / 2) - 1];
+  }
+
+  // Random 30% chance to swap second dish for prata
+  if (generateDigit() / 10 <= 0.3) {
+    secondDish = {
+      name: "roti prata",
+      hasSambal: false
+    };
+    outputString = `The gods have smiled upon you!`;
+    outputString += `<br>Uncle has cooked ${firstDish.name} and ${secondDish.name} for you!`;
+  } else {
+    outputString = `Uncle has cooked ${firstDish.name} and ${secondDish.name} for you!`;
+  }
+
+  if (firstDish.hasSambal || secondDish.hasSambal) {
+    outputString += `<br>Complimentary sambal will be included.`;
+  }
+
+  // Return output.
+  displayResults(outputString, "#input-hawker-food-omakase");
+}
+
+function generateDigit() {
+  var randomDecimal = Math.random() * 10;
+  var randomInteger = Math.floor(randomDecimal);
+  // var diceNumber = randomInteger + 1;
+  return randomInteger;
+};
 
 function rollDice() {
   var randomDecimal = Math.random() * 6;
