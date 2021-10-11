@@ -370,15 +370,17 @@ function getHawkerOmakase() {
   if (inputDish == "rice") {
     // let i = Math.ceil(rollDice() / 2) - 1;
     // console.log(Math.ceil(rollDice() / 2) - 1);
-    firstDish = riceDishes[Math.ceil(rollDice() / 2) - 1];
-    secondDish = riceDishes[Math.ceil(rollDice() / 2) - 1];
+    const randomIndex = Math.ceil(rollDice() / 2) - 1;
+    firstDish = riceDishes[randomIndex];
+    secondDish = riceDishes.filter((dish, index) => index != randomIndex)[Math.floor(Math.random() * (riceDishes.length - 1))];
   } else if (inputDish == "noodle") {
-    firstDish = noodleDishes[Math.ceil(rollDice() / 2) - 1];
-    secondDish = noodleDishes[Math.ceil(rollDice() / 2) - 1];
+    const randomIndex = Math.ceil(rollDice() / 2) - 1;
+    firstDish = noodleDishes[randomIndex];
+    secondDish = noodleDishes.filter((dish, index) => index != randomIndex)[Math.floor(Math.random() * (riceDishes.length - 1))];
   }
 
   // Random 30% chance to swap second dish for prata
-  if (generateDigit() / 10 <= 0.3) {
+  if (1 - Math.random() <= 0.3) {
     secondDish = {
       name: "roti prata",
       hasSambal: false
