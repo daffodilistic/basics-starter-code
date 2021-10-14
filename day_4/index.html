@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Basics Day 4</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/css/uikit.min.css" />
+
+  <!-- UIkit JS -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.4/dist/js/uikit-icons.min.js"></script>
+
+  <style>
+    .uk-background-rocketacademy {
+      background-color: pink;
+    }
+
+    .uk-link,
+    a {
+      color: white !important;
+    }
+
+    .uk-subnav-pill>.uk-active>a {
+      background-color: crimson !important;
+      color: white !important;
+    }
+
+    .uk-subnav-pill>*> :first-child {
+      background-color: transparent !important;
+      color: black !important;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="uk-text-center uk-margin-top uk-margin-bottom">Basics! 🚀</h1>
+  <div class="uk-section uk-margin-left uk-margin-right">
+    <div class="uk-container uk-background-rocketacademy">
+      <ul id="switcher" class="uk-subnav uk-subnav-pill" uk-switcher="animation: uk-animation-fade">
+      </ul>
+      <ul id="switcher-content" class="uk-switcher uk-margin">
+      </ul>
+      <div class="uk-flex uk-flex-center">
+        <button class="uk-button uk-width-small" id="submit-button">Submit</button>
+      </div>
+      <h4 class="uk-margin-top uk-margin-bottom">Output:</h4>
+      <h5 class="uk-margin-top uk-margin-bottom">
+        <div id="output-div" class="uk-padding-small uk-background-muted">&nbsp;</div>
+      </h5>
+    </div>
+  </div>
+  <!-- Import program logic -->
+  <script src="script.js"></script>
+</body>
+
+</html>
