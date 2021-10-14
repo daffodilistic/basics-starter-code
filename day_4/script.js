@@ -5,25 +5,40 @@ const EXERCISES = Object.freeze(
       instruction: "Enter your guess:",
       inputId: "input-last-roll",
       functionCall: lastRoll
-    }
+    },
+    {
+      title: "Win/Loss",
+      instruction: "Enter your guess:",
+      inputId: "input-win-loss",
+      functionCall: lastRollWithWinLoss
+    },
   ]
 );
 
 class AppState {
+  #rolls = [];
+  #winCount = 0;
+
   constructor() {
-    this.rolls = [];
   }
 
-  addRoll(roll) {
-    this.rolls.push(roll);
+  addRoll(roll, addWinCount = false) {
+    this.#rolls.push(roll);
+    if (addWinCount) {
+      this.#winCount++;
+    }
   }
 
   getLastRoll() {
-    if (this.rolls.length == 0) {
+    if (this.#rolls.length == 0) {
       return -1;
     } else {
-      return this.rolls[this.rolls.length - 1];
+      return this.#rolls[this.#rolls.length - 1];
     }
+  }
+
+  getWinRate() {
+    return this.#winCount / this.#rolls.length;
   }
 }
 
@@ -58,23 +73,49 @@ button.addEventListener("click", function () {
 function lastRoll() {
   const randomDiceNumber = rollDice();
   const diceGuess = parseInt(document.querySelector("#input-last-roll").value);
-  
+
   let result = "";
 
   if (App.getLastRoll() != -1) {
     result += `Your last roll was ${App.getLastRoll()}` + "<br>";
   }
-  
+
   result += `You just rolled a ${randomDiceNumber}. You guessed ${diceGuess}.` + "<br>";
 
   if (randomDiceNumber == diceGuess) {
     result += "You win!";
-    displayResults(result);
   } else {
     result += "You lose!";
-    displayResults(result);
   }
+
   App.addRoll(randomDiceNumber);
+
+  displayResults(result);
+}
+
+function lastRollWithWinLoss() {
+  const randomDiceNumber = rollDice();
+  const diceGuess = parseInt(document.querySelector("#input-win-loss").value);
+
+  let result = "";
+
+  if (App.getLastRoll() != -1) {
+    result += `Your last roll was ${App.getLastRoll()}` + "<br>";
+  }
+
+  result += `You just rolled a ${randomDiceNumber}. You guessed ${diceGuess}.` + "<br>";
+
+  if (randomDiceNumber == diceGuess) {
+    result += "You win!";
+  } else {
+    result += "You lose!";
+  }
+
+  App.addRoll(randomDiceNumber, randomDiceNumber == diceGuess);
+
+  result += "<br>" + `Your win rate is ${(App.getWinRate() * 100).toFixed(2)}%!`;
+
+  displayResults(result);
 }
 
 function rollDice() {
