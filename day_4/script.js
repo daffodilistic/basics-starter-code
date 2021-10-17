@@ -30,6 +30,18 @@ const EXERCISES = Object.freeze(
       inputId: "input-advanced-guessing",
       functionCall: advancedGuessing
     },
+    {
+      title: "Secret Word X in a Row",
+      instruction: "Enter your guess:",
+      inputId: "input-secretWord",
+      functionCall: secretWord
+    },
+    {
+      title: "Dice Within 2 Dice",
+      instruction: "Enter your guess:",
+      inputId: "input-dice-within",
+      functionCall: diceWithin
+    },
   ]
 );
 
@@ -38,6 +50,12 @@ class AppState {
   #winCount = 0;
   #points = 0;
   #currentSwitcherIndex = -1;
+  guessesToWin = -1;
+  guessCount = 0;
+  correctGuesses = 0;
+  secretWords = ["banana", "chisel", "faucet", "garden"];
+  currentSecretWord = "";
+  fudgeDice = -1;
 
   constructor() {
   }
@@ -95,6 +113,12 @@ class AppState {
     this.#rolls = [];
     this.#winCount = 0;
     this.#points = 0;
+    this.guessesToWin = -1;
+    this.guessCount = 0;
+    this.correctGuesses = 0;
+    this.secretWords = ["banana", "chisel", "faucet", "garden"];
+    this.currentSecretWord = "";
+    this.fudgeDice = -1;
   }
 
   getLastSwitcherIndex() {
@@ -138,6 +162,56 @@ button.addEventListener("click", function () {
 
   EXERCISES[activeSwitcherIndex].functionCall();
 });
+
+function diceWithin() {
+  const diceGuess = parseInt(document.querySelector("#input-dice-within").value);
+  const diceRolls = [rollDice(), rollDice()];
+
+  if (App.fudgeDice === -1) {
+    App.fudgeDice = 1 + Math.floor(Math.random() * 3);
+  }
+
+  let isWithinRange = diceRolls.some((roll) => {
+    return diceGuess >= (roll - App.fudgeDice) && diceGuess <= (roll + App.fudgeDice)
+  });
+
+  if (isWithinRange) {
+    displayResults(`You guessed ${diceGuess} and rolled (${diceRolls.toString()}). Your guess is within ${App.fudgeDice} of the rolls. You win!`);
+    App.fudgeDice = -1;
+  } else {
+    displayResults(`You guessed ${diceGuess} and rolled (${diceRolls.toString()}). You lost!`);
+  }
+}
+
+function secretWord() {
+  const wordGuess = document.querySelector("#input-secretWord").value;
+
+  App.currentSecretWord = App.secretWords[Math.floor(Math.random() * App.secretWords.length)];
+  App.secretWords = App.secretWords.filter(word => word !== App.currentSecretWord);
+
+  if (App.guessesToWin === -1) {
+    App.guessesToWin = 2 + Math.floor(Math.random() * 3);
+  }
+
+  App.guessCount += 1;
+
+  if (App.currentSecretWord === wordGuess) {
+    App.correctGuesses += 1;
+  }
+
+  let result = `You guessed <b>${wordGuess}</b>. The secret word was <b>${App.currentSecretWord}</b>. You need ${App.guessesToWin - App.correctGuesses} more guesses to win.`;
+  document.querySelector("#input-secretWord").value = "";
+  console.log(App.secretWords);
+  if (App.correctGuesses === App.guessesToWin && App.guessesToWin === App.guessCount) {
+    result = `You win! You guessed <b>${wordGuess}</b>. The secret word was <b>${App.currentSecretWord}</b>.`;
+    App.resetState();
+  } else if (App.guessCount > App.correctGuesses) {
+    result = `You lost! You guessed <b>${wordGuess}</b>. The secret word was <b>${App.currentSecretWord}</b>. You needed ${App.guessesToWin - App.correctGuesses} more guesses to win.`;
+    App.resetState();
+  }
+
+  displayResults(result);
+}
 
 function lastRoll() {
   const randomDiceNumber = rollDice();
