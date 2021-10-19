@@ -1,3 +1,6 @@
 [submodule "project_scissors-paper-stone"]
 	path = projects/scissors-paper-stone
 	url = https://github.com/daffodilistic/rocketacademy-basics-scissors-paper-stone.git
+[submodule "projects/beat-that"]
+	path = projects/beat-that
+	url = https://github.com/daffodilistic/rocketacademy-basics-beat-that.git
