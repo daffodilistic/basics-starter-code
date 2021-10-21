@@ -11,6 +11,13 @@ const EXERCISES = Object.freeze(
       instruction: "Enter size of square:",
       inputId: "input-emoji-drawing",
       functionCall: emojiDrawing
+    },
+    {
+      title: "Multi-Dice Game",
+      instruction: "Press Submit to start the game!",
+      inputId: "input-multi-dice",
+      instructionsId: "instructions-multi-dice",
+      functionCall: multiDiceGame
     }
   ]
 );
@@ -25,7 +32,7 @@ EXERCISES.forEach((exercise) => {
     </li>`;
   switcherContent.innerHTML += `
     <li>
-      <h4>${exercise.instruction}</h4>
+      <h4 id="${exercise.instructionsId}">${exercise.instruction}</h4>
       <input id="${exercise.inputId}" class="uk-form-small uk-input" />
     </li>`;
 });
@@ -38,10 +45,69 @@ button.addEventListener("click", function () {
 
   // console.log(`selected index is ${activeSwitcherIndex}`);
   clearOutput();
+  diceRollHistory = [];
   EXERCISES[activeSwitcherIndex].functionCall();
 });
 
-const diceRollHistory = [];
+let diceRollHistory = [];
+// state -1: enter no. of dice to roll
+// state 0: dice guess from user.
+// state 1: check for win condition
+// state 2: end game?
+let diceGameState = -1;
+let diceGuess = -1;
+let diceToRoll = -1;
+let winCount = 0;
+let gameCount = 0;
+
+function multiDiceGame() {
+  if (diceGameState === -1) {
+    setInstructionsText("Enter number of dice to roll:", "#instructions-multi-dice");
+    diceRollHistory = [];
+    diceGuess = -1;
+    diceToRoll = -1;
+    diceGameState++;
+  } else if (diceGameState === 0) {
+    diceToRoll = Number(document.querySelector("#input-multi-dice").value);
+    console.log("No. of dice to roll is " + diceToRoll);
+    setInstructionsText("Enter your guess:", "#instructions-multi-dice");
+    diceGameState++;
+  } else if (diceGameState === 1) {
+    diceGuess = Number(document.querySelector("#input-multi-dice").value);
+    console.log("Number To Guess is " + diceGuess);
+    setInstructionsText("Click submit to start the game!", "#instructions-multi-dice");
+    diceGameState++;
+  } else if (diceGameState === 2) {
+    clearInput("#input-multi-dice");
+
+    let winGame = false;
+
+    for (let i = 0; i < diceToRoll; i++) {
+      const diceResult = Math.floor(Math.random() * 6) + 1;
+      diceRollHistory.push(diceResult);
+      if (diceResult === diceGuess) {
+        winGame = true;
+        i = diceToRoll;
+      }
+    }
+
+    if (winGame) {
+      displayResults("Congrats you win!");
+      diceGameState = -1;
+      winCount += 1;
+    } else {
+      displayResults("Sorry, you lost!");
+      diceGameState = -1;
+    }
+
+    gameCount += 1;
+
+    displayResults("Your dice rolls were: " + diceRollHistory);
+    displayResults(`Your win ratio is: ${(winCount / gameCount) * 100}%`);
+
+    setInstructionsText("Click submit to restart the game!", "#instructions-multi-dice");
+  }
+}
 
 function diceGameWithHistory() {
   const diceResult = Math.floor(Math.random() * 6) + 1;
@@ -114,6 +180,16 @@ function displayResults(result, inputId) {
   if (inputId) {
     document.querySelector(inputId).value = "";
   }
+}
+
+function setInstructionsText(text, id) {
+  const instructionText = document.querySelector(id);
+  instructionText.innerHTML = text;
+}
+
+function clearInput(id) {
+  const outputElement = document.querySelector(id);
+  outputElement.value = "";
 }
 
 function clearOutput() {
