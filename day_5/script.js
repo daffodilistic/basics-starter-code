@@ -41,10 +41,6 @@ button.addEventListener("click", function () {
   EXERCISES[activeSwitcherIndex].functionCall();
 });
 
-class App {
-  mode = "";
-}
-
 function diceGameValidation() {
   const diceResult = Math.floor(Math.random() * 6) + 1;
   const diceGuess = Number(document.querySelector("#input-dice-game").value);
