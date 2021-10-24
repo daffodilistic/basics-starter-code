@@ -23,6 +23,7 @@
           <hr>
           <h2 class="uk-margin-small-top uk-margin-bottom uk-text-center">Exercises</h2>
           <div id="card-grid-exercises" class="uk-child-width-1-4@m uk-grid-small uk-grid-match" uk-grid>
+            <div class="uk-align-center uk-width-auto" uk-spinner="ratio: 2"></div>
           </div>
           <hr>
           <h2 class="uk-margin-small-top uk-margin-bottom uk-text-center">Projects</h2>
@@ -39,15 +40,17 @@
     async function renderExercises() {
       const DAYS = 12;
 
+      documentHtml = "";
+
       for (let i = 1; i <= DAYS; i++) {
         const path = `day_${i}`;
         const response = await fetch(`${path}/index.html`, {
           method: 'HEAD'
         });
         if (response.ok) {
-          document.querySelector("#card-grid-exercises").innerHTML += `
+          documentHtml += `
           <div>
-            <div class="uk-card-small uk-card-default">
+            <div class="uk-card-small uk-card-default uk-animation-scale-up">
               <div class="uk-card-header">
                 <h3 class="uk-card-title uk-text-center">Day ${i}</h3>
               </div>
@@ -66,18 +69,20 @@
           break;
         }
       }
+
+      document.querySelector("#card-grid-exercises").innerHTML = documentHtml;
     }
 
     function renderProjects() {
-      const projects = Object.freeze(["scissors-paper-stone"]);
+      const projects = Object.freeze(["scissors-paper-stone", "beat-that"]);
 
       projects.forEach((project) => {
         const path = `projects/${project}`;
         const projectTitle = project.replace(RegExp("-", "g"), " ");
 
         document.querySelector("#card-grid-projects").innerHTML += `
-        <div>
-          <div class="uk-card-small uk-card-default">
+        <div >
+          <div class="uk-card-small uk-card-default uk-animation-scale-up">
             <div class="uk-card-header">
               <h3 class="uk-card-title uk-text-center uk-text-capitalize">${projectTitle}</h3>
             </div>
