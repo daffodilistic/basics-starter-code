@@ -4,3 +4,6 @@
 [submodule "projects/beat-that"]
 	path = projects/beat-that
 	url = https://github.com/daffodilistic/rocketacademy-basics-beat-that.git
+[submodule "rocketacademy-basics-blackjack"]
+	path = projects/blackjack
+	url = https://github.com/daffodilistic/rocketacademy-basics-blackjack.git
